@@ -36,16 +36,16 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           docker build --pull \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA} \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            -t "$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA}" \
+            -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" \
             .
 
       - name: Push image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push "$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA}"
+          docker push "$ECR_REGISTRY/$ECR_REPOSITORY:latest"
 
       - name: Trigger central deployment workflow
         env:
